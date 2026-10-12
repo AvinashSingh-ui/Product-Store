@@ -1,7 +1,12 @@
 import axios from "axios";
 
+const rawBaseUrl = (import.meta.env.VITE_API_BASE_URL || "")
+  .trim()
+  .replace(/;+$/, "")
+  .replace(/\/+$/, "");
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "",
+  baseURL: rawBaseUrl,
 });
 
 export const getProducts = (search, signal) => {

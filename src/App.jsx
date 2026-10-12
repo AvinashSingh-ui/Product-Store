@@ -34,7 +34,12 @@ function App() {
           controller.signal
         );
 
-        setProducts(response.data);
+        if (Array.isArray(response.data)) {
+          setProducts(response.data);
+        } else {
+          setProducts([]);
+          setError("Invalid response format received from server.");
+        }
       } catch (err) {
         if (controller.signal.aborted) return;
 
@@ -57,7 +62,9 @@ function App() {
       setLoading(true);
       await createProduct(product);
       const response = await getProducts(search);
-      setProducts(response.data);
+      if (Array.isArray(response.data)) {
+        setProducts(response.data);
+      }
     } catch (err) {
       setError(
         err.response?.data?.message ||
@@ -81,7 +88,9 @@ function App() {
       setError("");
       await updateProduct(id, product);
       const res = await getProducts(search);
-      setProducts(res.data);
+      if (Array.isArray(res.data)) {
+        setProducts(res.data);
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Unable to update product");
       throw err;
@@ -101,7 +110,9 @@ function App() {
       setLoading(true);
       await deleteProduct(id);
       const res = await getProducts(search);
-      setProducts(res.data);
+      if (Array.isArray(res.data)) {
+        setProducts(res.data);
+      }
       if (editingProduct?.id === id) {
         setEditingProduct(null);
       }
