@@ -1,19 +1,24 @@
 import axios from "axios";
 
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || "",
+});
+
 export const getProducts = (search, signal) => {
-  return axios.get("/api/products", {
+  return api.get("/api/products", {
     params: { search },
     signal,
   });
 };
 
 export const createProduct = (product) => {
-  return axios.post("/api/products", product);
+  return api.post("/api/products", product);
 };
 
-export const updateProduct=(id,product)=>{
-  return axios.put(`/api/products/${id}`,product)
-}
-export const deleteProduct=(id)=>{
-  return axios.delete(`/api/products/${id}`);
-}
+export const updateProduct = (id, product) => {
+  return api.put(`/api/products/${id}`, product);
+};
+
+export const deleteProduct = (id) => {
+  return api.delete(`/api/products/${id}`);
+};
